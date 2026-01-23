@@ -1,131 +1,139 @@
-# MaoMao Terminal 🐱
+# 🐱 MaoMao Terminal
 
-> A lightweight, draggable, and resizable terminal component for React applications.
+> A dynamic, context-aware, and draggable terminal component for React applications.
 
-Maomao Terminal provides a fully functional, retro-styled terminal interface for your React apps. It supports command history, draggable/resizable windows, and a powerful system for registering global and dynamic commands.
+[![npm version](https://img.shields.io/npm/v/maomao-terminal.svg)](https://www.npmjs.com/package/maomao-terminal)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-## Features
+**MaoMao Terminal** is not just a UI toy; it's a powerful debugging and interaction tool. It allows you to inject commands dynamically from any component in your application tree, making it context-aware.
 
-- 📦 **Draggable & Resizable**: Full window control with a floating interface.
-- ⌨️ **Command Support**: Built-in command system with support for custom dynamic commands.
-- 🎨 **Customizable**: Easy styling via CSS variables and class overrides.
-- ⚡ **Lightweight**: Built with React and Framer Motion for smooth animations.
+## ✨ Features
 
-## Installation
+- **Context-Aware**: Register commands from any component using the `useTerminalContext` hook.
+- **Draggable & Resizable**: Fully interactive window management (minimize, maximize, drag, resize).
+- **Built-in Utilities**: Comes with `inspect`, `location`, `storage`, `time`, and more.
+- **Command History**: Navigate through previous commands with Up/Down arrows.
+- **Animations**: Smooth transitions powered by `framer-motion`.
+- **TypeScript**: Fully typed for excellent developer experience.
+
+## 📦 Installation
+
+This library depends on `react`, `react-dom`, and `framer-motion`.
 
 ```bash
-npm install maomao framer-motion
-# or
-yarn add maomao framer-motion
+# npm
+npm install maomao-terminal framer-motion
+
+# yarn
+yarn add maomao-terminal framer-motion
 ```
 
-*Note: `framer-motion` is a peer dependency.*
+## 🚀 Quick Start
 
-## Quick Start
+### 1. Wrap your application with `TerminalProvider`
 
-### 1. Wrap your app in the provider
+This provider manages the state of global and dynamic commands.
 
 ```tsx
-import { TerminalProvider } from 'maomao';
+import React, { useState } from 'react';
+import { TerminalProvider, Terminal } from 'maomao-terminal';
+// Import default styles (required)
+import 'maomao-terminal/dist/components/Terminal.css'; 
 
 function App() {
-  return (
-    <TerminalProvider>
-      <YourApplication />
-    </TerminalProvider>
-  );
-}
-```
-
-### 2. Add the Terminal component
-
-```tsx
-import { useState } from 'react';
-import { Terminal } from 'maomao';
-import 'maomao/dist/components/Terminal.css'; // Don't forget the styles!
-
-function MyPage() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div>
-      <button onClick={() => setIsOpen(true)}>Open Terminal</button>
-      
-      <Terminal 
-        isOpen={isOpen} 
-        onClose={() => setIsOpen(false)} 
-      />
-    </div>
+    <TerminalProvider>
+      <div className="app-container">
+        <button onClick={() => setIsOpen(true)}>Open Terminal</button>
+        
+        <Terminal 
+          isOpen={isOpen} 
+          onClose={() => setIsOpen(false)} 
+        />
+        
+        {/* Your app content */}
+      </div>
+    </TerminalProvider>
   );
 }
+
+export default App;
 ```
 
-## Adding Custom Commands
+## 💡 Advanced Usage: Dynamic Commands
 
-You can register commands globally or dynamically within your components using `useTerminalContext`.
+The real power of MaoMao Terminal lies in its ability to "learn" commands from the components currently rendered on the screen.
+
+Use `useTerminalContext` to register commands that are only available when a specific component is mounted.
 
 ```tsx
 import { useEffect } from 'react';
-import { useTerminalContext, TerminalCommand } from 'maomao';
+import { useTerminalContext } from 'maomao-terminal';
 
-const MyComponent = () => {
-  const { registerDynamicCommands, unregisterDynamicCommands } = useTerminalContext();
+const UserProfile = ({ userId }) => {
+  const { registerCommand, unregisterCommand } = useTerminalContext();
 
   useEffect(() => {
-    const myCommands: TerminalCommand[] = [
-      {
-        command: 'greet',
-        response: (args) => `Hello, ${args[0] || 'stranger'}! 👋`
-      },
-      {
-        command: 'fetch-data',
-        response: async () => {
-          const data = await fetch('/api/data').then(res => res.json());
-          return JSON.stringify(data, null, 2);
-        }
+    // Register a command specific to this component
+    registerCommand({
+      command: 'getUser',
+      response: async (args) => {
+        // You can clear data, fetch API, or log info
+        return `Current User ID: ${userId}`;
       }
-    ];
-
-    registerDynamicCommands(myCommands);
+    });
 
     // Cleanup when component unmounts
-    return () => unregisterDynamicCommands(myCommands);
-  }, [registerDynamicCommands, unregisterDynamicCommands]);
+    return () => unregisterCommand('getUser');
+  }, [userId, registerCommand, unregisterCommand]);
 
-  return <div>Component with special commands</div>;
+  return <div>User Profile Component</div>;
 };
 ```
 
-## Styling
+Now, when `UserProfile` is on screen, you can type `getUser` in the terminal!
 
-Maomao uses standard CSS classes that you can override in your own stylesheets.
+## 🛠 Built-in Commands
 
-| Class | Description |
-|-------|-------------|
-| `.terminal-container` | Main wrapper, controls background, border, shadow |
-| `.terminal-header` | Top bar (draggable area) |
-| `.terminal-body` | Content area with command history |
-| `.terminal-input-wrapper` | Area containing the prompt ($) and input |
-| `.terminal-resize-handle` | The handle in the bottom-right corner |
+| Command | Description |
+|Args|
+|---------|-------------|------|
+| `help` | Lists available commands | |
+| `clear` | Clears the terminal output | |
+| `echo` | Repeats your input | `[text]` |
+| `inspect` | Inspects global window properties | |
+| `location` | Shows current URL | |
+| `storage` | Inspects or clears localStorage | `[clear]` |
+| `viewport` | Shows window dimensions | |
+| `time` | Shows current local time | |
+| `about` | Library information | |
 
-## API Reference
+## 🎨 Customization
 
-### `<Terminal />`
+The terminal comes with a default dark theme. You can override styles by targeting the CSS classes defined in `Terminal.css`.
 
-| Prop | Type | Description |
-|------|------|-------------|
-| `isOpen` | `boolean` | Controls visibility of the terminal |
-| `onClose` | `() => void` | Callback fired when the close button is clicked |
+Top-level classes:
+- `.terminal-container`: The main window.
+- `.terminal-header`: The drag handle and title bar.
+- `.terminal-body`: The content area.
+- `.terminal-input`: The command input field.
 
-### `TerminalCommand` Type
+## 🤝 Contributing
 
-```typescript
-type TerminalCommand = {
-  command: string;
-  response: (args: string[]) => string | Promise<string>;
-}
-```
+Contributions are welcome! Please feel free to submit a Pull Request.
 
-## License
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
-MIT
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+---
+
+Created with ❤️ by **Juan Manuel Camacho Sanchez**

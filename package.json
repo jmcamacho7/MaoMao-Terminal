@@ -1,14 +1,14 @@
 {
-  "name": "maomao",
+  "name": "maomao-terminal",
   "version": "1.0.0",
-  "description": "Una librería de componentes de terminal estilo React",
+  "description": "A React-style terminal component library",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "author": "Juan Manuel Camacho Sanchez",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jmcamacho/maomao.git"
+    "url": "git+https://github.com/jmcamacho7/maomao-terminal.git"
   },
   "keywords": [
     "react",
@@ -22,7 +22,8 @@
   ],
   "scripts": {
     "build": "tsc && shx mkdir -p dist/components && shx cp src/components/*.css dist/components/",
-    "watch": "tsc --watch"
+    "watch": "tsc --watch",
+    "prepublishOnly": "npm run build"
   },
   "peerDependencies": {
     "framer-motion": "^10.0.0",
