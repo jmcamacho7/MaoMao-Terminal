@@ -97,8 +97,7 @@ Now, when `UserProfile` is on screen, you can type `getUser` in the terminal!
 
 ## 🛠 Built-in Commands
 
-| Command | Description |
-|Args|
+| Command | Description | Args |
 |---------|-------------|------|
 | `help` | Lists available commands | |
 | `clear` | Clears the terminal output | |
