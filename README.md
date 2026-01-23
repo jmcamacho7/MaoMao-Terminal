@@ -16,6 +16,14 @@
 - **Animations**: Smooth transitions powered by `framer-motion`.
 - **TypeScript**: Fully typed for excellent developer experience.
 
+## ✅ Compatibility
+
+| Technology | Support | Note |
+|------------|---------|------|
+| **React**  | v16.8+  | Requires Hooks support (`useState`, `useEffect`) |
+| **Next.js**| v13+    | Fully aligned with App Router (`'use client'`) & Pages Router |
+| **Vite**   | All versions | Works out of the box |
+
 ## 📦 Installation
 
 This library depends on `react`, `react-dom`, and `framer-motion`.
