@@ -71,7 +71,7 @@ export const baseCommands: TerminalCommand[] = [
          Empowering Front-End Developers
         ══════════════════════════════════════════════════════
 
-         v1.0.0
+         v1.0.2
 
          A dynamic, context-aware terminal overlay for React.
          Seamlessly inject commands from your components and
