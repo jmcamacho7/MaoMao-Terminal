@@ -8,6 +8,7 @@ import { CloseButton } from './icons/Close'
 import { MaximizeButton } from './icons/Maximize'
 import { MinimizeButton } from './icons/Minimize'
 import './Terminal.css'
+import { useKeys } from '../hooks/useKeys'
 
 export type TerminalProps = {
   isOpen: boolean
@@ -17,9 +18,7 @@ export type TerminalProps = {
 const Terminal: React.FC<TerminalProps> = ({ isOpen, onClose }) => {
   const terminalRef = useRef<HTMLDivElement>(null)
   const scrollRef = useRef<HTMLDivElement>(null)
-  const [input, setInput] = useState('')
-  const [historyPointer, setHistoryPointer] = useState<number | null>(null)
-  const { history, commandHistory, executeCommand } = useTerminal()
+  const { history, input, onChange, onKeyDown } = useKeys()
   const {
     size,
     position,
@@ -27,6 +26,8 @@ const Terminal: React.FC<TerminalProps> = ({ isOpen, onClose }) => {
     resize,
     isMaximized,
     isMinimized,
+    isDragging,
+    isResizing,
     minimize,
     maximize,
     restore
@@ -36,60 +37,12 @@ const Terminal: React.FC<TerminalProps> = ({ isOpen, onClose }) => {
     if (scrollRef.current) scrollRef.current.scrollTop = scrollRef.current.scrollHeight
   }, [history])
 
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    switch (e.key) {
-      case 'Enter':
-        enter(e)
-        break
-      case 'ArrowUp':
-        arrowUp(e)
-        break
-      case 'ArrowDown':
-        arrowDown(e)
-        break
-    }
-  }
-
-  const enter = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    e.preventDefault()
-    if (!input.trim()) return
-    executeCommand(input)
-    setInput('')
-    setHistoryPointer(null)
-  }
-
-  const arrowUp = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    e.preventDefault()
-    if (commandHistory.length === 0) return
-
-    const newPointer = historyPointer === null
-      ? commandHistory.length - 1
-      : Math.max(0, historyPointer - 1)
-
-    setHistoryPointer(newPointer)
-    setInput(commandHistory[newPointer])
-  }
-
-  const arrowDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    e.preventDefault()
-    if (historyPointer === null) return
-
-    const newPointer = historyPointer + 1
-    if (newPointer >= commandHistory.length) {
-      setHistoryPointer(null)
-      setInput('')
-    } else {
-      setHistoryPointer(newPointer)
-      setInput(commandHistory[newPointer])
-    }
-  }
-
   return (
     <AnimatePresence>
       {isOpen && (
         <motion.div
           ref={terminalRef}
-          className="terminal-container"
+          className="terminal-container font-mono"
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{
             opacity: 1,
@@ -101,7 +54,15 @@ const Terminal: React.FC<TerminalProps> = ({ isOpen, onClose }) => {
             borderRadius: isMaximized ? 0 : 8
           }}
           exit={{ opacity: 0, scale: 0.9 }}
-          transition={{ type: 'spring', stiffness: 400, damping: 35 }}
+          transition={{
+            type: 'spring',
+            stiffness: 400,
+            damping: 35,
+            width: isResizing ? { duration: 0 } : { type: 'spring', stiffness: 400, damping: 35 },
+            height: isResizing ? { duration: 0 } : { type: 'spring', stiffness: 400, damping: 35 },
+            left: isDragging ? { duration: 0 } : { type: 'spring', stiffness: 400, damping: 35 },
+            top: isDragging ? { duration: 0 } : { type: 'spring', stiffness: 400, damping: 35 }
+          }}
         >
           <div className="terminal-header" onMouseDown={drag}>
             <span className="terminal-title">
@@ -121,7 +82,7 @@ const Terminal: React.FC<TerminalProps> = ({ isOpen, onClose }) => {
           <div ref={scrollRef} className="terminal-body terminal-scrollbar">
             {history.map((line, i) => (
               <div key={i} className="terminal-line">
-                <span className="terminal-prompt">➜</span>
+                <span className="terminal-prompt">&gt;</span>
                 {line}
               </div>
             ))}
@@ -134,8 +95,8 @@ const Terminal: React.FC<TerminalProps> = ({ isOpen, onClose }) => {
               autoFocus
               placeholder="Type a command..."
               value={input}
-              onChange={e => setInput(e.target.value)}
-              onKeyDown={handleKeyDown}
+              onChange={e => onChange(e.target.value)}
+              onKeyDown={onKeyDown}
             />
           </div>
 

@@ -1,10 +1,10 @@
 /* ================================
-   CONTENEDOR PRINCIPAL
+   CONTAINER
 ================================ */
 .terminal-container {
   position: fixed;
   background: rgba(10, 10, 10, 0.5);
-  color: #22c55e;
+  color: #65fdb9;
   border-radius: 8px;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
   backdrop-filter: blur(12px);
@@ -13,7 +13,6 @@
   flex-direction: column;
   white-space: pre-wrap;
   z-index: 50;
-  font-family: "JetBrains Mono", "Fira Code", "Courier New", monospace;
   overflow: hidden;
   transition: box-shadow 0.2s;
 }
@@ -119,8 +118,7 @@
 }
 
 .terminal-prompt {
-  color: #eab308;
-  /* Yellow 500 */
+  color: #65fdb9;
   font-weight: bold;
   margin-right: 8px;
 }
@@ -128,7 +126,7 @@
 .terminal-input {
   flex: 1;
   background: transparent;
-  color: #22c55e;
+  color: white;
   border: none;
   outline: none;
   font-family: inherit;
@@ -161,7 +159,7 @@
 }
 
 .terminal-resize-handle:hover::after {
-  border-color: #22c55e;
+  border-color: #65fdb9;
 }
 
 /* ================================

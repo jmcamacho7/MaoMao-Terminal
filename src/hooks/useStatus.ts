@@ -9,6 +9,9 @@ export function useStatus() {
   const [isMinimized, setIsMinimized] = useState(false)
   const [isMaximized, setIsMaximized] = useState(false)
 
+  const [isDragging, setIsDragging] = useState(false)
+  const [isResizing, setIsResizing] = useState(false)
+
   const isDraggingRef = useRef(false)
   const isResizingRef = useRef(false)
   const dragStart = useRef({ x: 0, y: 0 })
@@ -16,6 +19,8 @@ export function useStatus() {
 
   const lastFloatingSize = useRef({ width: 500, height: 300 })
   const lastFloatingPosition = useRef({ x: 100, y: 100 })
+
+  const preventSelect = (e: Event) => e.preventDefault();
 
   useEffect(() => {
     if (!isMaximized && !isMinimized) {
@@ -43,6 +48,8 @@ export function useStatus() {
   const end = useCallback(() => {
     isDraggingRef.current = false
     isResizingRef.current = false
+    setIsDragging(false)
+    setIsResizing(false)
   }, [])
 
   useEffect(() => {
@@ -79,19 +86,23 @@ export function useStatus() {
   }
 
   const drag = (e: React.MouseEvent) => {
-    if (isMaximized) return 
+    if (isMaximized) return
+    document.addEventListener('selectstart', preventSelect);
     isDraggingRef.current = true
+    setIsDragging(true)
     dragStart.current = { x: e.clientX - position.x, y: e.clientY - position.y }
+    document.removeEventListener('selectstart', preventSelect);
   }
 
   const resize = (e: React.MouseEvent) => {
     if (isMaximized || isMinimized) return
     isResizingRef.current = true
+    setIsResizing(true)
     resizeStart.current = { x: e.clientX, y: e.clientY, width: size.width, height: size.height }
   }
 
-  return { 
-    size, position, isMinimized, isMaximized, 
-    drag, resize, minimize, maximize, restore 
+  return {
+    size, position, isMinimized, isMaximized, isDragging, isResizing,
+    drag, resize, minimize, maximize, restore
   }
 }

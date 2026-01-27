@@ -1,4 +1,4 @@
-# 🐱 MaoMao Terminal
+# 🐱 MaoMao Terminal v1.0.2
 
 > A dynamic, context-aware, and draggable terminal component for React applications.
 
