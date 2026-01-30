@@ -81,21 +81,25 @@ import { useEffect } from 'react';
 import { useTerminalContext } from 'maomao-terminal';
 
 const UserProfile = ({ userId }) => {
-  const { registerCommand, unregisterCommand } = useTerminalContext();
+  const { registerDynamicCommands, unregisterDynamicCommands } = useTerminalContext();
 
   useEffect(() => {
-    // Register a command specific to this component
-    registerCommand({
-      command: 'getUser',
-      response: async (args) => {
-        // You can clear data, fetch API, or log info
-        return `Current User ID: ${userId}`;
+    const commands = [
+      {
+        command: 'getUser',
+        response: async (args) => {
+          // You can clear data, fetch API, or log info
+          return `Current User ID: ${userId}`;
+        }
       }
-    });
+    ];
+
+    // Register a command specific to this component
+    registerDynamicCommands(commands);
 
     // Cleanup when component unmounts
-    return () => unregisterCommand('getUser');
-  }, [userId, registerCommand, unregisterCommand]);
+    return () => unregisterDynamicCommands(commands);
+  }, [userId, registerDynamicCommands, unregisterDynamicCommands]);
 
   return <div>User Profile Component</div>;
 };
