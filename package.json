@@ -23,6 +23,8 @@
   "scripts": {
     "build": "tsc && shx mkdir -p dist/components dist/styles && shx cp src/components/*.css dist/components/ && shx cp src/styles/*.css dist/styles/",
     "watch": "concurrently \"tsc --watch\" \"cpx \\\"src/components/*.css\\\" dist/components/ --watch\" \"cpx \\\"src/styles/*.css\\\" dist/styles/ --watch\"",
+    "test": "vitest",
+    "test:coverage": "vitest run --coverage",
     "prepublishOnly": "npm run build"
   },
   "peerDependencies": {
@@ -30,11 +32,16 @@
     "react-dom": "^18.0.0 || ^19.0.0"
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
     "@types/react": "^18.0.0",
     "@types/react-dom": "^18.0.0",
+    "@vitest/coverage-v8": "^4.0.18",
     "concurrently": "^9.2.1",
     "cpx": "^1.5.0",
+    "jsdom": "^27.4.0",
     "shx": "^0.4.0",
-    "typescript": "^5.0.0"
+    "typescript": "^5.0.0",
+    "vitest": "^4.0.18"
   }
 }

@@ -12,3 +12,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Dependencies**: Removed `framer-motion`. Now using native CSS transitions for zero-dependency animations.
 - **Documentation**: Updated README to reflect native CSS approach (no manual CSS import required).
 
+### Added
+- **Testing**: Added comprehensive test suite using Vitest and React Testing Library (>90% coverage).
