@@ -9,7 +9,7 @@ export function parseCommand(input: string) {
   const parts = input.split(/\s+/)
   return {
     raw: input,
-    cmdName: parts[0],
+    cmdName: parts[0].toLowerCase(),
     args: parts.slice(1)
   }
 }

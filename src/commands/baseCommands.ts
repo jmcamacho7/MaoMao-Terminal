@@ -66,22 +66,20 @@ export const baseCommands: TerminalCommand[] = [
   {
     command: 'about',
     response: () => `
-        ══════════════════════════════════════════════════════
-         🐱 MaoMao Terminal
-         Empowering Front-End Developers
-        ══════════════════════════════════════════════════════
+    /\\_/\\
+   ( o.o )   MaoMao Terminal v1.0.4
+    > ^ <    Context-Aware Debugging
 
-         v1.0.2
+   [==================================]
 
-         A dynamic, context-aware terminal overlay for React.
-         Seamlessly inject commands from your components and
-         supercharge your debugging workflow.
+   A dynamic overlay to inject commands
+   directly from your React components.
 
-         Created by Juan Manuel Camacho Sanchez
+   > "Code like a cat: agile and precise."
 
-                       猫
+   Type 'help' to start.
 
-        ══════════════════════════════════════════════════════
-    `,
+   (c) Juan Manuel Camacho Sanchez
+    `
   },
 ]

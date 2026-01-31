@@ -18,10 +18,8 @@ const Terminal: React.FC<TerminalProps> = ({ isOpen, onClose }) => {
   const terminalRef = useRef<HTMLDivElement>(null)
   const scrollRef = useRef<HTMLDivElement>(null)
 
-  // Logic & State (Low frequency)
   const { history } = useTerminalLogic()
 
-  // UI & Positioning (High frequency)
   const {
     size,
     position,

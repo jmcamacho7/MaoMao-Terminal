@@ -34,7 +34,6 @@
 }
 
 .line {
-  margin-bottom: 4px;
   word-break: break-all;
 }
 
@@ -44,6 +43,7 @@
   padding: 8px 12px;
   min-height: 44px;
   flex-shrink: 0;
+  backdrop-filter: blur(12px);
 }
 
 .input {
@@ -53,6 +53,7 @@
   outline: none;
   font-family: inherit;
   font-size: inherit;
+  color: whitesmoke;
 }
 
 .resizeHandle {

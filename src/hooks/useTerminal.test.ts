@@ -19,8 +19,8 @@ describe('useTerminal', () => {
     })
 
     expect(mockResponse).toHaveBeenCalledWith(['arg1'])
-    expect(result.current.history).toContainEqual(expect.stringContaining('test arg1'))
-    expect(result.current.history).toContainEqual('Success')
+    expect(result.current.history).toContainEqual({ type: 'input', content: 'test arg1' })
+    expect(result.current.history).toContainEqual({ type: 'output', content: 'Success' })
   })
 
   it('handles unknown command', async () => {
@@ -30,7 +30,10 @@ describe('useTerminal', () => {
       await result.current.executeCommand('unknown')
     })
 
-    expect(result.current.history).toContainEqual(expect.stringContaining('Command not found: unknown'))
+    expect(result.current.history).toContainEqual({
+      type: 'output',
+      content: expect.stringContaining('Command not found: unknown')
+    })
   })
 
   it('clears history', async () => {

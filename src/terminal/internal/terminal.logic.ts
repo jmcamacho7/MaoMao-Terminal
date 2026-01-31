@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useCallback, useMemo } from 'react'
-import { TerminalCommand, useTerminal } from '../../hooks/useTerminal'
+import { TerminalCommand, useTerminal, TerminalHistoryItem } from '../../hooks/useTerminal'
 import { baseCommands } from '../../commands/baseCommands'
 
 export type TerminalLogicContextType = {
@@ -7,7 +7,7 @@ export type TerminalLogicContextType = {
   dynamicCommands: TerminalCommand[]
   registerDynamicCommands: (commands: TerminalCommand[]) => void
   unregisterDynamicCommands: (commands: TerminalCommand[]) => void
-  history: string[]
+  history: TerminalHistoryItem[]
   executeCommand: (input: string) => Promise<string | undefined>
   clearHistory: () => void
 }
