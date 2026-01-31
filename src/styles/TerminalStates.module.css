@@ -1,0 +1,39 @@
+.transition {
+  transition:
+    width 0.3s cubic-bezier(0.25, 0.8, 0.25, 1),
+    height 0.3s cubic-bezier(0.25, 0.8, 0.25, 1),
+    top 0.3s cubic-bezier(0.25, 0.8, 0.25, 1),
+    left 0.3s cubic-bezier(0.25, 0.8, 0.25, 1),
+    opacity 0.2s ease,
+    transform 0.2s ease,
+    border-radius 0.3s ease;
+}
+
+.focused {
+  box-shadow:
+    0 15px 50px rgba(0, 0, 0, 0.8),
+    0 0 0 1px rgba(34, 197, 94, 0.3);
+}
+
+.maximized {
+  border-radius: 0;
+  border: none;
+  width: 100vw !important;
+  height: 100vh !important;
+  top: 0 !important;
+  left: 0 !important;
+}
+
+.minimized {
+  height: 42px !important;
+}
+
+.visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.hidden {
+  opacity: 0;
+  transform: scale(0.9);
+}

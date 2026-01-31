@@ -1,5 +1,4 @@
-import { useStatus } from "../../hooks/useStatus";
-import '../Terminal.css'
+import styles from '../../styles/TerminalControls.module.css'
 
 type Props = {
   onClick: () => void
@@ -22,7 +21,7 @@ const RestoreIcon = () => (
 export function MaximizeButton({ onClick, isMaximized }: Props) {
   return (
     <button
-      className="terminal-btn"
+      className={`terminal-btn ${styles.button}`}
       onClick={() => { onClick() }}
       title={isMaximized ? "Restore" : "Maximize"}
     >

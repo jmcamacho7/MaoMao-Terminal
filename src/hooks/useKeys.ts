@@ -1,10 +1,12 @@
 import { useCallback, useState } from "react"
 import { useTerminal } from "./useTerminal"
 
-export function useKeys() {
+type TerminalLogic = ReturnType<typeof useTerminal>
+
+export function useKeys(terminal: TerminalLogic) {
   const [input, setInput] = useState("")
   const [historyPointer, setHistoryPointer] = useState<number | null>(null)
-  const { history, commandHistory, executeCommand } = useTerminal()
+  const { history, commandHistory, executeCommand } = terminal
 
   const handleEnter = useCallback((e: React.KeyboardEvent<HTMLInputElement>) => {
     e.preventDefault()

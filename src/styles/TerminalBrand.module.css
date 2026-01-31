@@ -1,0 +1,22 @@
+.title {
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: #a1a1aa;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.brandText {
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.suffix {
+  color: #10b981;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.catIcon {
+  font-size: 1rem;
+}

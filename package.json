@@ -1,6 +1,6 @@
 {
   "name": "maomao-terminal",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "A React-style terminal component library",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -21,12 +21,11 @@
     "README.md"
   ],
   "scripts": {
-    "build": "tsc && shx mkdir -p dist/components && shx cp src/components/*.css dist/components/",
-    "watch": "concurrently \"tsc --watch\" \"cpx \\\"src/components/*.css\\\" dist/components/ --watch\"",
+    "build": "tsc && shx mkdir -p dist/components dist/styles && shx cp src/components/*.css dist/components/ && shx cp src/styles/*.css dist/styles/",
+    "watch": "concurrently \"tsc --watch\" \"cpx \\\"src/components/*.css\\\" dist/components/ --watch\" \"cpx \\\"src/styles/*.css\\\" dist/styles/ --watch\"",
     "prepublishOnly": "npm run build"
   },
   "peerDependencies": {
-    "framer-motion": "^10.0.0 || ^11.0.0 || ^12.0.0",
     "react": "^18.0.0 || ^19.0.0",
     "react-dom": "^18.0.0 || ^19.0.0"
   },
@@ -35,7 +34,6 @@
     "@types/react-dom": "^18.0.0",
     "concurrently": "^9.2.1",
     "cpx": "^1.5.0",
-    "framer-motion": "^12.23.24",
     "shx": "^0.4.0",
     "typescript": "^5.0.0"
   }

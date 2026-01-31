@@ -13,7 +13,7 @@
 - **Draggable & Resizable**: Fully interactive window management (minimize, maximize, drag, resize).
 - **Built-in Utilities**: Comes with `inspect`, `location`, `storage`, `time`, and more.
 - **Command History**: Navigate through previous commands with Up/Down arrows.
-- **Animations**: Smooth transitions powered by `framer-motion`.
+- **Animations**: Smooth transitions powered by Native CSS & Transitions (Zero dependencies).
 - **TypeScript**: Fully typed for excellent developer experience.
 
 ## ✅ Compatibility
@@ -26,14 +26,14 @@
 
 ## 📦 Installation
 
-This library depends on `react`, `react-dom`, and `framer-motion`.
+This library depends on `react` and `react-dom`.
 
 ```bash
 # npm
-npm install maomao-terminal framer-motion
+npm install maomao-terminal
 
 # yarn
-yarn add maomao-terminal framer-motion
+yarn add maomao-terminal
 ```
 
 ## 🚀 Quick Start
@@ -45,8 +45,6 @@ This provider manages the state of global and dynamic commands.
 ```tsx
 import React, { useState } from 'react';
 import { TerminalProvider, Terminal } from 'maomao-terminal';
-// Import default styles (required)
-import 'maomao-terminal/dist/components/Terminal.css'; 
 
 function App() {
   const [isOpen, setIsOpen] = useState(false);
@@ -123,7 +121,7 @@ Now, when `UserProfile` is on screen, you can type `getUser` in the terminal!
 
 ## 🎨 Customization
 
-The terminal comes with a default dark theme. You can override styles by targeting the CSS classes defined in `Terminal.css`.
+The terminal comes with a default dark theme. You can override styles by targeting the CSS classes defined in `Terminal.scss`.
 
 Top-level classes:
 - `.terminal-container`: The main window.

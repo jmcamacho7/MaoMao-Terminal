@@ -6,6 +6,7 @@ export function useStatus() {
 
   const [size, setSize] = useState({ width: 500, height: 300 })
   const [position, setPosition] = useState({ x: 100, y: 100 })
+
   const [isMinimized, setIsMinimized] = useState(false)
   const [isMaximized, setIsMaximized] = useState(false)
 
@@ -29,7 +30,13 @@ export function useStatus() {
     }
   }, [size, position, isMaximized, isMinimized]);
 
+  const cleanSelectedText = () => {
+    const selection = window.getSelection();
+    if (selection) selection.removeAllRanges();
+  }
+
   const dragTo = useCallback((e: MouseEvent) => {
+    cleanSelectedText()
     if (!isDraggingRef.current) return
     setPosition({
       x: Math.min(Math.max(0, e.clientX - dragStart.current.x), window.innerWidth - size.width),
@@ -38,12 +45,21 @@ export function useStatus() {
   }, [size])
 
   const resizeTo = useCallback((e: MouseEvent) => {
+    setIsMinimized(false)
     if (!isResizingRef.current) return
+
+    cleanSelectedText()
+
+    const deltaX = e.clientX - resizeStart.current.x
+    const deltaY = e.clientY - resizeStart.current.y
+    const newHeight = Math.max(MIN_HEIGHT, resizeStart.current.height + deltaY)
+
     setSize({
-      width: Math.max(MIN_WIDTH, resizeStart.current.width + (e.clientX - resizeStart.current.x)),
-      height: Math.max(MIN_HEIGHT, resizeStart.current.height + (e.clientY - resizeStart.current.y))
+      width: Math.max(MIN_WIDTH, resizeStart.current.width + deltaX),
+      height: newHeight
     })
-  }, [])
+  }, [cleanSelectedText])
+
 
   const end = useCallback(() => {
     isDraggingRef.current = false
@@ -95,7 +111,7 @@ export function useStatus() {
   }
 
   const resize = (e: React.MouseEvent) => {
-    if (isMaximized || isMinimized) return
+    if (isMaximized) return
     isResizingRef.current = true
     setIsResizing(true)
     resizeStart.current = { x: e.clientX, y: e.clientY, width: size.width, height: size.height }
