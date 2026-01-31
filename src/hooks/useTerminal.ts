@@ -1,40 +1,41 @@
 'use client'
 
 import { useState } from 'react'
-import { useTerminalContext } from '../context/TerminalProvider'
+import { parseCommand } from '../utils/terminalUtils'
+
 
 export interface TerminalCommand {
   command: string
   response: (args: string[]) => string | Promise<string>
 }
 
-export function useTerminal() {
-  const { globalCommands, dynamicCommands } = useTerminalContext()
-  const [history, setHistory] = useState<string[]>([])
+export type TerminalHistoryItem = {
+  type: 'input' | 'output'
+  content: string
+}
+
+export function useTerminal(commands: TerminalCommand[]) {
+  const [history, setHistory] = useState<TerminalHistoryItem[]>([])
   const [commandHistory, setCommandHistory] = useState<string[]>([])
 
   const executeCommand = async (input: string) => {
     if (!input.trim()) return
 
-    const parts = input.trim().split(/\s+/)
-    const cmdName = parts[0]
-    const args = parts.slice(1)
-
-    // Add to command history for navigation
+    const { cmdName, args } = parseCommand(input)
     setCommandHistory(prev => [...prev, input])
 
-    if (cmdName === 'clear') {
-      setHistory([])
-      return
-    }
+    if (cmdName === 'clear') { setHistory([]); return }
 
-    const cmd = [...dynamicCommands, ...globalCommands].find(c => c.command === cmdName)
+    const command = commands.find(c => c.command === cmdName)
+    const result: string = command
+      ? await command.response(args)
+      : `Command not found: ${cmdName}`
 
-    let result: string
-    if (cmd) result = await cmd.response(args)
-    else result = `Command not found: ${cmdName}`
-
-    setHistory(prev => [...prev, `$ ${input}`, result])
+    setHistory(prev => [
+      ...prev,
+      { type: 'input', content: input },
+      { type: 'output', content: result }
+    ])
     return result
   }
 

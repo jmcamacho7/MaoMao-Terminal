@@ -1,4 +1,4 @@
 export { default as Terminal } from './components/Terminal'
-export { TerminalProvider, useTerminalContext } from './context/TerminalProvider'
+export { TerminalProvider, useTerminalContext } from './terminal/TerminalProvider'
 export { useTerminal, type TerminalCommand } from './hooks/useTerminal'
 export { baseCommands } from './commands/baseCommands'

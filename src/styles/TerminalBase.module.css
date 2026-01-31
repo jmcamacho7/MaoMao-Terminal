@@ -1,0 +1,67 @@
+.container {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  white-space: pre-wrap;
+  z-index: 50;
+  overflow: hidden;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    "Liberation Mono", "Courier New", monospace;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 42px;
+  padding: 0 12px;
+  cursor: grab;
+  user-select: none;
+  flex-shrink: 0;
+}
+
+.header:active {
+  cursor: grabbing;
+}
+
+.body {
+  flex: 1;
+  padding: 12px;
+  overflow-y: auto;
+  position: relative;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.line {
+  word-break: break-all;
+}
+
+.inputWrapper {
+  display: flex;
+  align-items: center;
+  padding: 8px 12px;
+  min-height: 44px;
+  flex-shrink: 0;
+  backdrop-filter: blur(12px);
+}
+
+.input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-family: inherit;
+  font-size: inherit;
+  color: whitesmoke;
+}
+
+.resizeHandle {
+  width: 16px;
+  height: 16px;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  cursor: se-resize;
+  z-index: 60;
+}

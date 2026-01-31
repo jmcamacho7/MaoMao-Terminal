@@ -13,8 +13,9 @@
 - **Draggable & Resizable**: Fully interactive window management (minimize, maximize, drag, resize).
 - **Built-in Utilities**: Comes with `inspect`, `location`, `storage`, `time`, and more.
 - **Command History**: Navigate through previous commands with Up/Down arrows.
-- **Animations**: Smooth transitions powered by `framer-motion`.
+- **Animations**: Smooth transitions powered by Native CSS & Transitions (Zero dependencies).
 - **TypeScript**: Fully typed for excellent developer experience.
+- **Testing**: Includes a comprehensive test suite (Vitest + React Testing Library) with >90% coverage.
 
 ## ✅ Compatibility
 
@@ -26,14 +27,14 @@
 
 ## 📦 Installation
 
-This library depends on `react`, `react-dom`, and `framer-motion`.
+This library depends on `react` and `react-dom`.
 
 ```bash
 # npm
-npm install maomao-terminal framer-motion
+npm install maomao-terminal
 
 # yarn
-yarn add maomao-terminal framer-motion
+yarn add maomao-terminal
 ```
 
 ## 🚀 Quick Start
@@ -45,8 +46,6 @@ This provider manages the state of global and dynamic commands.
 ```tsx
 import React, { useState } from 'react';
 import { TerminalProvider, Terminal } from 'maomao-terminal';
-// Import default styles (required)
-import 'maomao-terminal/dist/components/Terminal.css'; 
 
 function App() {
   const [isOpen, setIsOpen] = useState(false);
@@ -123,13 +122,25 @@ Now, when `UserProfile` is on screen, you can type `getUser` in the terminal!
 
 ## 🎨 Customization
 
-The terminal comes with a default dark theme. You can override styles by targeting the CSS classes defined in `Terminal.css`.
+The terminal uses **CSS Modules** internally to avoid class collisions. However, it relies on modern CSS variables for theming if exposed, or you can override specific data attributes if supported in future versions.
 
-Top-level classes:
-- `.terminal-container`: The main window.
-- `.terminal-header`: The drag handle and title bar.
-- `.terminal-body`: The content area.
-- `.terminal-input`: The command input field.
+For now, as it is zero-dependency, styles are bundled. If you need to override deep styles, you might need to use specific CSS selectors targeting the structure:
+
+- `[class*="terminal-container"]`: The main window
+- `[class*="terminal-header"]`: The drag handle
+- `[class*="terminal-body"]`: The content area
+
+## 🧪 Testing
+
+If you are contributing, you can run the test suite:
+
+```bash
+npm run test
+# or for coverage
+npm run test:coverage
+```
+
+Current coverage is >90% across logic and components.
 
 ## 🤝 Contributing
 

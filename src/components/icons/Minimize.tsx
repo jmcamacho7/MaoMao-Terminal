@@ -1,5 +1,4 @@
-import { useStatus } from "../../hooks/useStatus";
-import '../Terminal.css'
+import styles from '../../styles/TerminalControls.module.css'
 
 type Props = {
   onClick: () => void
@@ -15,7 +14,7 @@ export const MinimizeIcon = () => (
 export function MinimizeButton({ onClick, isMinimized }: Props) {
   return (
     <button
-      className="terminal-btn"
+      className={`terminal-btn ${styles.button}`}
       onClick={() => { onClick(); }}
       disabled={isMinimized}
       title={isMinimized ? "Restore" : "Minimize"}

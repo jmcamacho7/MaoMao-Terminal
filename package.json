@@ -1,6 +1,6 @@
 {
   "name": "maomao-terminal",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "A React-style terminal component library",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -21,22 +21,27 @@
     "README.md"
   ],
   "scripts": {
-    "build": "tsc && shx mkdir -p dist/components && shx cp src/components/*.css dist/components/",
-    "watch": "concurrently \"tsc --watch\" \"cpx \\\"src/components/*.css\\\" dist/components/ --watch\"",
+    "build": "tsc && shx mkdir -p dist/components dist/styles && shx cp src/components/*.css dist/components/ && shx cp src/styles/*.css dist/styles/",
+    "watch": "concurrently \"tsc --watch\" \"cpx \\\"src/components/*.css\\\" dist/components/ --watch\" \"cpx \\\"src/styles/*.css\\\" dist/styles/ --watch\"",
+    "test": "vitest",
+    "test:coverage": "vitest run --coverage",
     "prepublishOnly": "npm run build"
   },
   "peerDependencies": {
-    "framer-motion": "^10.0.0 || ^11.0.0 || ^12.0.0",
     "react": "^18.0.0 || ^19.0.0",
     "react-dom": "^18.0.0 || ^19.0.0"
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
     "@types/react": "^18.0.0",
     "@types/react-dom": "^18.0.0",
+    "@vitest/coverage-v8": "^4.0.18",
     "concurrently": "^9.2.1",
     "cpx": "^1.5.0",
-    "framer-motion": "^12.23.24",
+    "jsdom": "^27.4.0",
     "shx": "^0.4.0",
-    "typescript": "^5.0.0"
+    "typescript": "^5.0.0",
+    "vitest": "^4.0.18"
   }
 }
